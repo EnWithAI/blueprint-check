@@ -235,6 +235,24 @@ describe("generate on the demo repository", () => {
     expect((await cli(["generate", "--architecture-config", "missing.json", "--quiet"], dir)).code).toBe(3);
   });
 
+  it("flags elements that come only from test, fixture or example paths", () => {
+    const dir = tempRepo({
+      "package.json": '{"name":"tool"}',
+      "examples/demo/docker-compose.yml": "services:\n  api:\n    build: ./api\n",
+      "examples/demo/api/Dockerfile": "FROM node:22\n",
+      "test/fixtures/openapi.yaml": "openapi: 3.0.3\ninfo:\n  title: t\n  version: '1'\npaths: {}\n",
+    });
+    const bp = generate({ cwd: dir, now: NOW });
+    const finding = bp.model.findings.find((f) => f.rule_id === "fixture-or-example-source");
+    expect(finding?.confidence).toBe("CONFIRMED");
+    expect(finding?.affected_ids.length).toBeGreaterThan(0);
+    expect(
+      generate({ cwd: demoRepo(), now: NOW }).model.findings.some(
+        (f) => f.rule_id === "fixture-or-example-source"
+      )
+    ).toBe(false);
+  });
+
   it("an empty repository yields a BLOCKED blueprint, not an invented one", () => {
     const bp = generate({ cwd: tempRepo({ "README.md": "# empty\n" }), now: NOW });
     expect(bp.model.overall_status).toBe("BLOCKED");

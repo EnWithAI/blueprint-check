@@ -42,6 +42,8 @@ export interface CoreModel {
 
 /** Most evidence records kept per claim (the register stays readable; counts are kept in observations). */
 const MAX_EVIDENCE_PER_CLAIM = 8;
+/** Paths that hold sample code rather than the system (tests, fixtures, examples, demos). */
+const SAMPLE_PATH = /(^|\/)(tests?|__tests__|fixtures?|__fixtures__|examples?|samples?|demos?)\//i;
 /** Most surface entries cited per contract or store. */
 const MAX_SURFACE_EVIDENCE = 20;
 
@@ -433,6 +435,41 @@ export function buildModel(root: string, sources: Sources, snapshot: Snapshot): 
       evidence_ids: k.evidence_ids,
       confidence: "CONFIRMED",
       optional_recommendation: "Move the description next to its service, or declare the owner in the model.",
+    });
+  // Elements, stores and contracts derived only from test, fixture or example paths describe sample code, not the
+  // system. Flag them rather than present them as architecture.
+  const sample = (paths: string[]): boolean =>
+    paths.length > 0 && paths.every((p) => SAMPLE_PATH.test(p.endsWith("/") ? p : `${p}/`));
+  const sampled = [
+    ...components
+      .filter((k) => sample(k.implementation_paths))
+      .map((k) => ({ id: k.id, evidence: k.evidence_ids })),
+    ...stores
+      .filter((k) =>
+        sample(
+          k.evidence_ids.map((e) => registry.records.find((r) => r.evidence_id === e)?.relative_path ?? "")
+        )
+      )
+      .map((k) => ({ id: k.id, evidence: k.evidence_ids })),
+    ...contracts
+      .filter((k) => sample(k.definition_paths))
+      .map((k) => ({ id: k.id, evidence: k.evidence_ids })),
+  ];
+  if (sampled.length > 0)
+    findings.push({
+      id: `F${pad(++f)}`,
+      rule_id: "fixture-or-example-source",
+      observation: `${sampled.length} element(s) come only from test, fixture or example paths: ${sampled
+        .slice(0, 10)
+        .map((s) => s.id)
+        .join(", ")}${sampled.length > 10 ? ", …" : ""}.`,
+      impact:
+        "These describe sample code shipped with the repository, not the system itself, and distort every view.",
+      affected_ids: sampled.map((s) => s.id),
+      evidence_ids: sampled.flatMap((s) => s.evidence.slice(0, 1)).slice(0, MAX_EVIDENCE_PER_CLAIM),
+      confidence: "CONFIRMED",
+      optional_recommendation:
+        "Exclude those paths in .architecture-check.json (`ignore`) and regenerate, or keep them if the samples are intended.",
     });
   const endpoints = surface.filter((e) => e.kind === "endpoint");
   const unhinted = endpoints.filter((e) => !e.auth_hint);

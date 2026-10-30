@@ -13,6 +13,7 @@ First version.
   D04, D05, D06 (partial), D07, D09, D10 and D11, the model, evidence register with hashed citations, coverage ledger,
   validation report, open questions and `workspace.dsl`. All 19 catalog views get a status; judgment views stay
   blocked.
+- Observation `fixture-or-example-source` flags elements derived only from test, fixture or example paths.
 - `--write-model`: writes `architecture/workspace.dsl` for Architecture Check when no declared model exists.
 - `drift` / `check`: evidence staleness and model drift; `check` exits 4 when stale.
 - GitHub Action (`generate` and `check` modes), JSON Schema 1.0, `SOURCE_DATE_EPOCH` support.

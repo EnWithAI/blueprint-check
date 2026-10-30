@@ -269,7 +269,12 @@
             "properties": {
               "id": { "type": "string", "pattern": "^F[0-9]+$" },
               "rule_id": {
-                "enum": ["isolated-container", "interface-unowned", "endpoints-without-auth-reference"]
+                "enum": [
+                  "isolated-container",
+                  "interface-unowned",
+                  "endpoints-without-auth-reference",
+                  "fixture-or-example-source"
+                ]
               },
               "observation": { "type": "string" },
               "impact": { "type": "string" },

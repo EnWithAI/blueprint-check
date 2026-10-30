@@ -39,7 +39,8 @@ group; every location with a line is hashed (sha256 of the cited lines joined by
 from Architecture Check cite their `package.json` or source directory.
 
 Findings (rule-based, never scores): `isolated-container` (INFERRED), `interface-unowned` (CONFIRMED),
-`endpoints-without-auth-reference` (INFERRED, only when auth boundaries exist). Gaps: every Architecture Check coverage
+`endpoints-without-auth-reference` (INFERRED, only when auth boundaries exist). `fixture-or-example-source` (CONFIRMED): elements, stores or contracts whose every path is under
+`test`, `fixtures`, `examples`, `samples` or `demos`; they describe sample code, not the system. Gaps: every Architecture Check coverage
 limitation, missing graph or surface, and the four judgment gaps (journeys, trust enforcement, runtime, operations).
 
 ## 4. Views
