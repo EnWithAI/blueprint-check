@@ -1,0 +1,14 @@
+flowchart TB
+    n_X01[/"X01 Stripe"/]
+    subgraph SYS["System boundary: shop"]
+        n_C01["C01 api (Node.js)"]
+        n_C02["C02 @shop/shared"]
+        n_C03["C03 web (Node.js)"]
+        n_DS01[("DS01 db (PostgreSQL)")]
+    end
+    n_C01 -->|"imports"| n_C02
+    n_C01 -->|"imports"| n_X01
+    n_C01 -->|"depends_on, env DATABASE_URL"| n_DS01
+    n_C03 -->|"imports"| n_C02
+    n_C03 -->|"depends_on, imports"| n_C01
+    LEGEND["Legend: arrow = derived relationship | label prefix INFERRED = heuristic | cylinder = data store | hexagon = contract"]

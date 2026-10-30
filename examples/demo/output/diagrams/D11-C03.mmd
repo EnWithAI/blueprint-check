@@ -1,0 +1,7 @@
+flowchart TB
+    subgraph n_C03["Container: C03 web (Node.js)"]
+        n_C06["C06 cart"]
+    end
+    n_C02["C02 @shop/shared"]
+    n_C06 -->|"imports"| n_C02
+    LEGEND["Legend: arrow = derived relationship | label prefix INFERRED = heuristic | cylinder = data store | hexagon = contract"]

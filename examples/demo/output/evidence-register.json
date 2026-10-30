@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0",
+  "kind": "blueprint-evidence-register",
+  "citation_format": "repo_id@snapshot_ref:relative_path:Lline_start-Lline_end",
+  "evidence": [
+    {
+      "evidence_id": "E001",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "docker-compose.yml",
+      "line_start": 12,
+      "line_end": 12,
+      "symbol_or_config_key": "compose-service",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "compose service db",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "839af03acfd9c75888103bcbd75f4f2558a938f4252dc83fa029907d79a4edca",
+      "supports_claim_ids": [
+        "DS01"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E002",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "api/Dockerfile",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "dockerfile",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "FROM node:22-alpine",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "850fcacb9fbb9759006e8de7e0119b53f0d9fc51770801e7f80b47acaf00266d",
+      "supports_claim_ids": [
+        "C01"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E003",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "docker-compose.yml",
+      "line_start": 6,
+      "line_end": 6,
+      "symbol_or_config_key": "compose-service",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "compose service api",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "66c90634d194fa13acde2d72ad96658c0f389082285f136e4e436283d18c67a7",
+      "supports_claim_ids": [
+        "C01"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E004",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "shared/package.json",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "package-manifest",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "Package manifest of the container's source path",
+      "source_tool": "blueprint-check",
+      "excerpt_sha256": "c8d71b04a4c1b522c287c4221db7015ad6a00f8cbffb5fc12faa9b3a8ffdc703",
+      "supports_claim_ids": [
+        "C02"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E005",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "docker-compose.yml",
+      "line_start": 2,
+      "line_end": 2,
+      "symbol_or_config_key": "compose-service",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "compose service web",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "ca34a47c9663786be26ae9cd5d599a3d2733570ceb76b5f45ab9be8e78aa2a5b",
+      "supports_claim_ids": [
+        "C03"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E006",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "web/Dockerfile",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "dockerfile",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "FROM node:22-alpine",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "850fcacb9fbb9759006e8de7e0119b53f0d9fc51770801e7f80b47acaf00266d",
+      "supports_claim_ids": [
+        "C03"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E007",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "api/src/orders",
+      "line_start": null,
+      "line_end": null,
+      "symbol_or_config_key": "component-directory",
+      "evidence_type": "implementation",
+      "concise_observation": "directory with source modules",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": null,
+      "supports_claim_ids": [
+        "C04"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E008",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "api/src/payments",
+      "line_start": null,
+      "line_end": null,
+      "symbol_or_config_key": "component-directory",
+      "evidence_type": "implementation",
+      "concise_observation": "directory with source modules",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": null,
+      "supports_claim_ids": [
+        "C05"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E009",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "web/src/cart",
+      "line_start": null,
+      "line_end": null,
+      "symbol_or_config_key": "component-directory",
+      "evidence_type": "implementation",
+      "concise_observation": "directory with source modules",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": null,
+      "supports_claim_ids": [
+        "C06"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E010",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "api/src/payments/stripe.ts",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "external-import",
+      "evidence_type": "implementation",
+      "concise_observation": "imports stripe",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "e1e927ab6836b2ed724edd0c498bc025f61ca8b2f27be58f4511021624bafb72",
+      "supports_claim_ids": [
+        "REL03",
+        "X01"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E011",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "api/src/orders/service.ts",
+      "line_start": 2,
+      "line_end": 2,
+      "symbol_or_config_key": "import",
+      "evidence_type": "implementation",
+      "concise_observation": "imports api/src/payments/stripe.ts",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": "f94405853f27617886dccce22426aab7cc94397a127e761b77d1fe419eede7b8",
+      "supports_claim_ids": [
+        "REL01"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E012",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "api/src/orders/service.ts",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "import",
+      "evidence_type": "implementation",
+      "concise_observation": "imports shared/src/money.ts",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": "8e465e51a8a7caa2381bf1a9bf63e74184e6ba78fca617aafd2e3a2ee1b739a1",
+      "supports_claim_ids": [
+        "REL02"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E013",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "docker-compose.yml",
+      "line_start": 9,
+      "line_end": 9,
+      "symbol_or_config_key": "compose-dependency",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "depends_on db",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "d71c851b5679bc6fbf6d7fadde30cfc4eb93f80243e7aaadbe0281a18f42d0d8",
+      "supports_claim_ids": [
+        "REL04"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E014",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "docker-compose.yml",
+      "line_start": 11,
+      "line_end": 11,
+      "symbol_or_config_key": "compose-environment",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "DATABASE_URL names host db",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "21ce40d2da4f248a90a9e3c7a7cf1d0830bb56d07ae470431fc64f3e8b0583f3",
+      "supports_claim_ids": [
+        "REL04"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E015",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "web/src/cart/cart.ts",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "import",
+      "evidence_type": "implementation",
+      "concise_observation": "imports shared/src/money.ts",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": "6aa1819d7a2048a1ed034be6fb67278eafe7ffd46659e2a3fd098da13422decc",
+      "supports_claim_ids": [
+        "REL05"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E016",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "docker-compose.yml",
+      "line_start": 5,
+      "line_end": 5,
+      "symbol_or_config_key": "compose-dependency",
+      "evidence_type": "registration_or_configuration",
+      "concise_observation": "depends_on api",
+      "source_tool": "architecture-check",
+      "excerpt_sha256": "e50c77683503e3edb2f1134026796dfb3ea1ccffc07601f8eca93ae6fadaf75d",
+      "supports_claim_ids": [
+        "REL06"
+      ],
+      "limitations": null
+    },
+    {
+      "evidence_id": "E017",
+      "repo_id": "R1",
+      "snapshot_ref": null,
+      "relative_path": "web/src/app.ts",
+      "line_start": 1,
+      "line_end": 1,
+      "symbol_or_config_key": "import",
+      "evidence_type": "implementation",
+      "concise_observation": "imports api/src/index.ts",
+      "source_tool": "impact-check-graph",
+      "excerpt_sha256": "1c44f14cc96ab83de6d9aba796c8268cd63034d425bd392a47196c5d64c418d8",
+      "supports_claim_ids": [
+        "REL06"
+      ],
+      "limitations": null
+    }
+  ]
+}

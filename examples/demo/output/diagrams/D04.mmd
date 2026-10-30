@@ -1,0 +1,7 @@
+flowchart LR
+    n_C01["C01 api (Node.js)"]
+    n_X01[/"X01 Stripe"/]
+    n_DS01[("DS01 db (PostgreSQL)")]
+    n_C01 -->|"imports"| n_X01
+    n_C01 -->|"depends_on, env DATABASE_URL"| n_DS01
+    LEGEND["Legend: arrow = derived relationship | label prefix INFERRED = heuristic | cylinder = data store | hexagon = contract"]

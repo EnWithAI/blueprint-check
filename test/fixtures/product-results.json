@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1.0",
+  "kind": "product-check-results",
+  "blueprint": {
+    "as_is": {
+      "components": [],
+      "uncertainties": [],
+      "as_built": {
+        "surface": [
+          { "id": "S-001", "kind": "endpoint", "name": "/orders", "method": "GET", "area": "orders", "detail": "listOrders handler", "location": { "path": "api/src/index.ts", "line": 3 }, "certainty": "observed", "auth_hint": false, "evidence_ids": [] },
+          { "id": "S-002", "kind": "endpoint", "name": "/orders", "method": "POST", "area": "orders", "detail": "createOrder handler", "location": { "path": "api/src/orders/service.ts", "line": 3 }, "certainty": "observed", "auth_hint": true, "evidence_ids": [] },
+          { "id": "S-003", "kind": "page", "name": "/cart", "method": null, "area": "cart", "detail": "cart page", "location": { "path": "web/src/cart/cart.ts", "line": 1 }, "certainty": "inferred", "auth_hint": false, "evidence_ids": [] },
+          { "id": "S-004", "kind": "entity", "name": "Order", "method": null, "area": "orders", "detail": "Order entity", "location": { "path": "api/src/orders/service.ts", "line": 1 }, "certainty": "observed", "auth_hint": false, "evidence_ids": [] },
+          { "id": "S-005", "kind": "integration", "name": "stripe", "method": null, "area": "payments", "detail": "stripe SDK", "location": { "path": "api/src/payments/stripe.ts", "line": 1 }, "certainty": "observed", "auth_hint": false, "evidence_ids": [] },
+          { "id": "S-006", "kind": "integration", "name": "SendGrid", "method": null, "area": "email", "detail": "email provider __FAKE_GITHUB_TOKEN__", "location": { "path": "api/src/index.ts", "line": 1 }, "certainty": "inferred", "auth_hint": false, "evidence_ids": [] },
+          { "id": "S-007", "kind": "auth-boundary", "name": "requireUser", "method": null, "area": "auth", "detail": "session check", "location": { "path": "api/src/orders/service.ts", "line": 2 }, "certainty": "observed", "auth_hint": true, "evidence_ids": [] }
+        ]
+      }
+    }
+  }
+}

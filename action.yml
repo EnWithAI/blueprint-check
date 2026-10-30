@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2026 EnWithAI Technologies
+# Blueprint Check composite GitHub Action. generate: writes the as-built architecture blueprint of the repository.
+# check: compares a committed blueprint with the code and reports drift. Security model below and in docs/ACTION.md.
+
+name: "Blueprint Check"
+description: "Generate an evidence-linked architecture blueprint (Mermaid views, model, coverage) and check that it stays true. Offline; never executes anything."
+author: "EnWithAI Technologies"
+branding:
+  icon: "map"
+  color: "blue"
+
+# Security model (see docs/ACTION.md):
+# - Use on `pull_request` or `push` with `permissions: contents: read`. Do not use `pull_request_target`.
+# - Runtime dependencies (Architecture Check and yaml) are installed from the pinned lockfile with
+#   `npm ci --omit=dev --ignore-scripts` (this step contacts the npm registry); generation makes no network access.
+# - Inputs are passed through environment variables, never interpolated into shell code.
+inputs:
+  mode:
+    description: "generate (default) or check."
+    required: false
+    default: "generate"
+  working-directory:
+    description: "Repository root, relative to the workspace."
+    required: false
+    default: "."
+  graph:
+    description: "Module graph from `impact-check graph --format json` (relative to working-directory). Optional."
+    required: false
+    default: ""
+  product-check:
+    description: "product-check-results.json or as-built spec JSON (relative to working-directory). Optional."
+    required: false
+    default: ""
+  blueprint:
+    description: "check: committed blueprint directory, relative to working-directory."
+    required: false
+    default: "architecture-blueprint"
+  output-dir:
+    description: "Directory (relative to the workspace) for the blueprint (generate) or the drift report (check)."
+    required: false
+    default: "architecture-blueprint"
+  fail-on-stale:
+    description: "check: fail the step when the blueprint is stale (default false: report only)."
+    required: false
+    default: "false"
+  on-error:
+    description: "Tool errors: auto (default; fail when fail-on-stale is true, otherwise warn), fail or warn."
+    required: false
+    default: "auto"
+outputs:
+  blueprint-dir:
+    description: "Output directory (relative to the workspace)."
+    value: ${{ steps.blueprint-check.outputs.blueprint-dir }}
+  overall-status:
+    description: "generate: PROVISIONAL or BLOCKED."
+    value: ${{ steps.blueprint-check.outputs.overall-status }}
+  result:
+    description: "generated, current or stale."
+    value: ${{ steps.blueprint-check.outputs.result }}
+  status:
+    description: "ok, or error when on-error let a tool error pass (fail-open)."
+    value: ${{ steps.blueprint-check.outputs.status }}
+runs:
+  using: "composite"
+  steps:
+    - name: Install Blueprint Check runtime dependencies (pinned lockfile, no install scripts)
+      shell: bash
+      run: |
+        cd "$GITHUB_ACTION_PATH"
+        if [ ! -d node_modules/@enwithai/architecture-check ]; then
+          npm ci --omit=dev --ignore-scripts --no-audit --no-fund
+        fi
+        test -f dist/action/main.js || { echo "::error::dist/ is missing in this Blueprint Check ref; use a release tag"; exit 1; }
+    - name: Run Blueprint Check
+      id: blueprint-check
+      shell: bash
+      env:
+        INPUT_MODE: ${{ inputs.mode }}
+        INPUT_WORKING_DIRECTORY: ${{ inputs.working-directory }}
+        INPUT_GRAPH: ${{ inputs.graph }}
+        INPUT_PRODUCT_CHECK: ${{ inputs.product-check }}
+        INPUT_BLUEPRINT: ${{ inputs.blueprint }}
+        INPUT_OUTPUT_DIR: ${{ inputs.output-dir }}
+        INPUT_FAIL_ON_STALE: ${{ inputs.fail-on-stale }}
+        INPUT_ON_ERROR: ${{ inputs.on-error }}
+      run: node "$GITHUB_ACTION_PATH/dist/action/main.js"

@@ -1,0 +1,722 @@
+{
+  "schema_version": "1.0",
+  "kind": "blueprint-architecture-model",
+  "tool": {
+    "name": "blueprint-check",
+    "version": "0.1.0"
+  },
+  "generated_at": "2026-01-01T00:00:00.000Z",
+  "system_name": "shop",
+  "overall_status": "PROVISIONAL",
+  "inputs": {
+    "architecture_check": {
+      "version": "0.2.1",
+      "config": "defaults"
+    },
+    "graph": {
+      "kind": "impact-check-graph",
+      "path": "/Users/rkoushik/Documents/GitHub Repos/crewpe-engineering-commons/blueprint-check/examples/demo/graph.json",
+      "sha256": "514a0d317b2e6c199c61ba574cf7bd0dae0914b952c7da2886abbd55729ad3ff"
+    },
+    "product_check": null
+  },
+  "repositories": [
+    {
+      "id": "R1",
+      "label": "shop",
+      "actual_ref": null,
+      "branch": null,
+      "dirty_state": "not_determined",
+      "access_status": "accessible",
+      "scope_paths": [
+        "."
+      ],
+      "limitations": [
+        "Dirty state is not determined: Blueprint Check reads .git directly and never runs git.",
+        "No commit could be read from .git; citations carry no snapshot ref."
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "C01",
+      "key": "api",
+      "name": "api",
+      "kind": "container",
+      "responsibility": "Container derived from compose.",
+      "repo_ids": [
+        "R1"
+      ],
+      "implementation_paths": [
+        "api"
+      ],
+      "technology": "Node.js",
+      "origins": [
+        "compose"
+      ],
+      "descriptors": [
+        "api/Dockerfile",
+        "docker-compose.yml"
+      ],
+      "parent_id": null,
+      "implementation_status": "wired",
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E002",
+        "E003"
+      ]
+    },
+    {
+      "id": "C02",
+      "key": "shop_shared",
+      "name": "@shop/shared",
+      "kind": "container",
+      "responsibility": "Container derived from workspace-package.",
+      "repo_ids": [
+        "R1"
+      ],
+      "implementation_paths": [
+        "shared"
+      ],
+      "technology": null,
+      "origins": [
+        "workspace-package"
+      ],
+      "descriptors": [],
+      "parent_id": null,
+      "implementation_status": "wired",
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E004"
+      ]
+    },
+    {
+      "id": "C03",
+      "key": "web",
+      "name": "web",
+      "kind": "container",
+      "responsibility": "Container derived from compose.",
+      "repo_ids": [
+        "R1"
+      ],
+      "implementation_paths": [
+        "web"
+      ],
+      "technology": "Node.js",
+      "origins": [
+        "compose"
+      ],
+      "descriptors": [
+        "docker-compose.yml",
+        "web/Dockerfile"
+      ],
+      "parent_id": null,
+      "implementation_status": "wired",
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E005",
+        "E006"
+      ]
+    },
+    {
+      "id": "C04",
+      "key": "api.orders",
+      "name": "orders",
+      "kind": "component",
+      "responsibility": "Source directory component from the module graph.",
+      "repo_ids": [
+        "R1"
+      ],
+      "implementation_paths": [
+        "api/src/orders"
+      ],
+      "technology": null,
+      "origins": [
+        "graph"
+      ],
+      "descriptors": [],
+      "parent_id": "C01",
+      "implementation_status": "wired",
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E007"
+      ]
+    },
+    {
+      "id": "C05",
+      "key": "api.payments",
+      "name": "payments",
+      "kind": "component",
+      "responsibility": "Source directory component from the module graph.",
+      "repo_ids": [
+        "R1"
+      ],
+      "implementation_paths": [
+        "api/src/payments"
+      ],
+      "technology": null,
+      "origins": [
+        "graph"
+      ],
+      "descriptors": [],
+      "parent_id": "C01",
+      "implementation_status": "wired",
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E008"
+      ]
+    },
+    {
+      "id": "C06",
+      "key": "web.cart",
+      "name": "cart",
+      "kind": "component",
+      "responsibility": "Source directory component from the module graph.",
+      "repo_ids": [
+        "R1"
+      ],
+      "implementation_paths": [
+        "web/src/cart"
+      ],
+      "technology": null,
+      "origins": [
+        "graph"
+      ],
+      "descriptors": [],
+      "parent_id": "C03",
+      "implementation_status": "wired",
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E009"
+      ]
+    },
+    {
+      "id": "X01",
+      "key": "stripe",
+      "name": "Stripe",
+      "kind": "external_system",
+      "responsibility": "External system referenced by vendor SDK imports.",
+      "repo_ids": [],
+      "implementation_paths": [],
+      "technology": null,
+      "origins": [
+        "vendor-sdk"
+      ],
+      "descriptors": [],
+      "parent_id": null,
+      "implementation_status": "unknown",
+      "confidence": "CORROBORATED",
+      "evidence_ids": [
+        "E010"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "REL01",
+      "key": "api.orders->api.payments",
+      "source_id": "C04",
+      "target_id": "C05",
+      "relationship_type": "imports",
+      "purpose": "imports",
+      "sync_or_async": "unknown",
+      "contract_ids": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E011"
+      ],
+      "unresolved_questions": []
+    },
+    {
+      "id": "REL02",
+      "key": "api.orders->shop_shared",
+      "source_id": "C04",
+      "target_id": "C02",
+      "relationship_type": "imports",
+      "purpose": "imports",
+      "sync_or_async": "unknown",
+      "contract_ids": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E012"
+      ],
+      "unresolved_questions": []
+    },
+    {
+      "id": "REL03",
+      "key": "api.payments->stripe",
+      "source_id": "C05",
+      "target_id": "X01",
+      "relationship_type": "imports",
+      "purpose": "imports",
+      "sync_or_async": "unknown",
+      "contract_ids": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E010"
+      ],
+      "unresolved_questions": []
+    },
+    {
+      "id": "REL04",
+      "key": "api->db",
+      "source_id": "C01",
+      "target_id": "DS01",
+      "relationship_type": "depends_on",
+      "purpose": "depends_on, env DATABASE_URL",
+      "sync_or_async": "unknown",
+      "contract_ids": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E013",
+        "E014"
+      ],
+      "unresolved_questions": []
+    },
+    {
+      "id": "REL05",
+      "key": "web.cart->shop_shared",
+      "source_id": "C06",
+      "target_id": "C02",
+      "relationship_type": "imports",
+      "purpose": "imports",
+      "sync_or_async": "unknown",
+      "contract_ids": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E015"
+      ],
+      "unresolved_questions": []
+    },
+    {
+      "id": "REL06",
+      "key": "web->api",
+      "source_id": "C03",
+      "target_id": "C01",
+      "relationship_type": "depends_on",
+      "purpose": "depends_on, imports",
+      "sync_or_async": "unknown",
+      "contract_ids": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E016",
+        "E017"
+      ],
+      "unresolved_questions": []
+    }
+  ],
+  "data_stores": [
+    {
+      "id": "DS01",
+      "key": "db",
+      "name": "db",
+      "technology_if_proven": "PostgreSQL",
+      "writers": [],
+      "readers": [
+        "C01"
+      ],
+      "schema_paths": [],
+      "confidence": "CONFIRMED",
+      "evidence_ids": [
+        "E001"
+      ]
+    }
+  ],
+  "contracts": [],
+  "journeys": [],
+  "diagrams": [
+    {
+      "id": "D00",
+      "catalog_id": "D00",
+      "title": "Master software blueprint",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "DS01",
+        "X01"
+      ],
+      "relationship_ids": [
+        "REL02",
+        "REL03",
+        "REL04",
+        "REL05",
+        "REL06"
+      ],
+      "artifact_path": "diagrams/D00.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D01",
+      "catalog_id": "D01",
+      "title": "Repository and deployable map",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "relationship_ids": [
+        "REL02",
+        "REL05",
+        "REL06"
+      ],
+      "artifact_path": "diagrams/D01.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D02",
+      "catalog_id": "D02",
+      "title": "Application floor plan",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "DS01"
+      ],
+      "relationship_ids": [
+        "REL01",
+        "REL02",
+        "REL04",
+        "REL05",
+        "REL06"
+      ],
+      "artifact_path": "diagrams/D02.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D04",
+      "catalog_id": "D04",
+      "title": "Data plumbing",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "DS01",
+        "X01"
+      ],
+      "relationship_ids": [
+        "REL03",
+        "REL04"
+      ],
+      "artifact_path": "diagrams/D04.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D05",
+      "catalog_id": "D05",
+      "title": "API and event wiring",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "DS01",
+        "X01"
+      ],
+      "relationship_ids": [
+        "REL02",
+        "REL03",
+        "REL04",
+        "REL05",
+        "REL06"
+      ],
+      "artifact_path": "diagrams/D05.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D07",
+      "catalog_id": "D07",
+      "title": "Database and storage blueprint",
+      "status": "produced",
+      "component_ids": [
+        "DS01"
+      ],
+      "relationship_ids": [],
+      "artifact_path": "diagrams/D07.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D09",
+      "catalog_id": "D09",
+      "title": "External integrations site plan",
+      "status": "produced",
+      "component_ids": [
+        "X01"
+      ],
+      "relationship_ids": [
+        "REL03"
+      ],
+      "artifact_path": "diagrams/D09.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D10",
+      "catalog_id": "D10",
+      "title": "Deployment and runtime blueprint",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "C03",
+        "DS01"
+      ],
+      "relationship_ids": [
+        "REL04",
+        "REL06"
+      ],
+      "artifact_path": "diagrams/D10.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D11-C01",
+      "catalog_id": "D11",
+      "title": "Component detail: api",
+      "status": "produced",
+      "component_ids": [
+        "C01",
+        "C02",
+        "C04",
+        "C05",
+        "X01"
+      ],
+      "relationship_ids": [
+        "REL01",
+        "REL02",
+        "REL03"
+      ],
+      "artifact_path": "diagrams/D11-C01.mmd",
+      "omitted_nodes": 0
+    },
+    {
+      "id": "D11-C03",
+      "catalog_id": "D11",
+      "title": "Component detail: web",
+      "status": "produced",
+      "component_ids": [
+        "C02",
+        "C03",
+        "C06"
+      ],
+      "relationship_ids": [
+        "REL05"
+      ],
+      "artifact_path": "diagrams/D11-C03.mmd",
+      "omitted_nodes": 0
+    }
+  ],
+  "findings": [],
+  "gaps": [
+    {
+      "id": "G01",
+      "code": "architecture-check:static-analysis-only",
+      "description": "Only static evidence is used: runtime calls, service discovery and deploy-time configuration are invisible. Missing evidence is reported as unknown, never as absence. (1)",
+      "affected_ids": [],
+      "criticality": "low",
+      "confirmation_needed": "See Architecture Check's coverage limitations for this code.",
+      "paths": []
+    },
+    {
+      "id": "G02",
+      "code": "no-product-surface",
+      "description": "No Product Check surface was given, so endpoints, pages, entities and auth boundaries are not derived.",
+      "affected_ids": [],
+      "criticality": "low",
+      "confirmation_needed": "Run `product-check run` (or `product-check spec --format json`) and pass the JSON with --product-check.",
+      "paths": []
+    },
+    {
+      "id": "G03",
+      "code": "journeys-not-derived",
+      "description": "Critical user journeys need a person or an agent to select and trace them; static derivation does not invent them.",
+      "affected_ids": [],
+      "criticality": "high",
+      "confirmation_needed": "Name the critical journeys and trace them (for example with the Software Architecture Blueprint master prompt).",
+      "paths": []
+    },
+    {
+      "id": "G04",
+      "code": "trust-enforcement-not-traced",
+      "description": "Authentication and authorization enforcement are not traced end to end.",
+      "affected_ids": [],
+      "criticality": "high",
+      "confirmation_needed": "Trace identity, permission checks and tenant isolation for each protected path.",
+      "paths": []
+    },
+    {
+      "id": "G05",
+      "code": "runtime-not-observed",
+      "description": "Static inspection only: deployment exposure, environment overrides and runtime behaviour are not observed.",
+      "affected_ids": [],
+      "criticality": "medium",
+      "confirmation_needed": "Compare with deployment manifests per environment and authorized runtime telemetry.",
+      "paths": []
+    },
+    {
+      "id": "G06",
+      "code": "operations-not-modelled",
+      "description": "Build and release, configuration precedence, observability and resilience are not derived.",
+      "affected_ids": [],
+      "criticality": "low",
+      "confirmation_needed": "Review CI workflows, configuration loading, telemetry and retry/timeout code.",
+      "paths": []
+    }
+  ],
+  "catalog": [
+    {
+      "catalog_id": "D00",
+      "name": "Master software blueprint",
+      "status": "produced",
+      "diagram_ids": [
+        "D00"
+      ],
+      "reason": "From the as-built model."
+    },
+    {
+      "catalog_id": "D01",
+      "name": "Repository and deployable map",
+      "status": "produced",
+      "diagram_ids": [
+        "D01"
+      ],
+      "reason": "Containers grouped by how they are declared (compose, Kubernetes, Dockerfile, package)."
+    },
+    {
+      "catalog_id": "D02",
+      "name": "Application floor plan",
+      "status": "produced",
+      "diagram_ids": [
+        "D02"
+      ],
+      "reason": "Containers with module-graph components."
+    },
+    {
+      "catalog_id": "D03",
+      "name": "User and request flow",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Request flows need traced journeys. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D04",
+      "name": "Data plumbing",
+      "status": "partial",
+      "diagram_ids": [
+        "D04"
+      ],
+      "reason": "Store and integration edges are shown; reads versus writes and transformations are not derived."
+    },
+    {
+      "catalog_id": "D05",
+      "name": "API and event wiring",
+      "status": "produced",
+      "diagram_ids": [
+        "D05"
+      ],
+      "reason": "Derived relationships plus API descriptions and discovered endpoints. Queues, pub/sub and webhooks are not detected by the inputs."
+    },
+    {
+      "catalog_id": "D06",
+      "name": "Authentication and security flow",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "No auth surface in the inputs. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D07",
+      "name": "Database and storage blueprint",
+      "status": "produced",
+      "diagram_ids": [
+        "D07"
+      ],
+      "reason": "Database containers and declared entities."
+    },
+    {
+      "catalog_id": "D08",
+      "name": "Background processing",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Schedulers, queues and workers are not detected by the inputs. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D09",
+      "name": "External integrations site plan",
+      "status": "produced",
+      "diagram_ids": [
+        "D09"
+      ],
+      "reason": "External systems from SDK imports and Product Check integrations."
+    },
+    {
+      "catalog_id": "D10",
+      "name": "Deployment and runtime blueprint",
+      "status": "produced",
+      "diagram_ids": [
+        "D10"
+      ],
+      "reason": "Compose, Kubernetes and Dockerfile declarations; not proof of production deployment."
+    },
+    {
+      "catalog_id": "D11",
+      "name": "Domain and component detail",
+      "status": "produced",
+      "diagram_ids": [
+        "D11-C01",
+        "D11-C03"
+      ],
+      "reason": "One view per container with components."
+    },
+    {
+      "catalog_id": "D12",
+      "name": "Critical journey sequences",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Critical journeys are not derived. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D13",
+      "name": "Build, release and supply path",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "CI and release definitions are not modelled by the inputs. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D14",
+      "name": "Configuration, environments and feature variants",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Configuration precedence is not derived. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D15",
+      "name": "Observability and operational control",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Telemetry wiring is not derived. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D16",
+      "name": "Resilience and failure paths",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Timeouts, retries and recovery are not derived. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    },
+    {
+      "catalog_id": "D17",
+      "name": "AI, agent and retrieval blueprint",
+      "status": "not_applicable",
+      "diagram_ids": [],
+      "reason": "No AI SDK import found by Architecture Check's vendor map (not proof of absence)."
+    },
+    {
+      "catalog_id": "D18",
+      "name": "Tenancy and data isolation",
+      "status": "blocked",
+      "diagram_ids": [],
+      "reason": "Tenancy is not evidenced or refuted by the inputs. Needs a person or an agent: static derivation cannot select or trace this without inventing it. Gap recorded."
+    }
+  ]
+}

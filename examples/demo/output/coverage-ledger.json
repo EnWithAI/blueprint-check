@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "kind": "blueprint-coverage-ledger",
+  "units": [
+    {
+      "scope_item_id": "U01",
+      "repo_id": "R1",
+      "category": "runnable or deployable unit",
+      "path_or_unit_id": "C01 api",
+      "inspection_status": "inspected",
+      "inspection_depth": "declaration, source paths and module-graph components",
+      "evidence_ids": [
+        "E002",
+        "E003"
+      ],
+      "related_diagram_ids": [
+        "D00",
+        "D01",
+        "D02",
+        "D04",
+        "D05",
+        "D10",
+        "D11-C01"
+      ],
+      "exclusion_or_gap_reason": null
+    },
+    {
+      "scope_item_id": "U02",
+      "repo_id": "R1",
+      "category": "runnable or deployable unit",
+      "path_or_unit_id": "C02 @shop/shared",
+      "inspection_status": "inspected",
+      "inspection_depth": "declaration, source paths and module-graph components",
+      "evidence_ids": [
+        "E004"
+      ],
+      "related_diagram_ids": [
+        "D00",
+        "D01",
+        "D02",
+        "D05",
+        "D11-C01",
+        "D11-C03"
+      ],
+      "exclusion_or_gap_reason": null
+    },
+    {
+      "scope_item_id": "U03",
+      "repo_id": "R1",
+      "category": "runnable or deployable unit",
+      "path_or_unit_id": "C03 web",
+      "inspection_status": "inspected",
+      "inspection_depth": "declaration, source paths and module-graph components",
+      "evidence_ids": [
+        "E005",
+        "E006"
+      ],
+      "related_diagram_ids": [
+        "D00",
+        "D01",
+        "D02",
+        "D05",
+        "D10",
+        "D11-C03"
+      ],
+      "exclusion_or_gap_reason": null
+    },
+    {
+      "scope_item_id": "U04",
+      "repo_id": "R1",
+      "category": "data schema or store",
+      "path_or_unit_id": "DS01 db",
+      "inspection_status": "enumerated_only",
+      "inspection_depth": "declared container only",
+      "evidence_ids": [
+        "E001"
+      ],
+      "related_diagram_ids": [
+        "D00",
+        "D02",
+        "D04",
+        "D05",
+        "D07",
+        "D10"
+      ],
+      "exclusion_or_gap_reason": "Schemas and migrations are not read"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "repository_access",
+      "numerator": 1,
+      "denominator": 1,
+      "percent": 100,
+      "note": "One repository per run."
+    },
+    {
+      "name": "architectural_unit_inspection",
+      "numerator": 3,
+      "denominator": 4,
+      "percent": 75,
+      "note": "partially_inspected=0, enumerated_only=1, excluded=0"
+    },
+    {
+      "name": "component_representation",
+      "numerator": 8,
+      "denominator": 8,
+      "percent": 100,
+      "note": "Elements beyond a view's node budget count only if another view draws them."
+    },
+    {
+      "name": "material_edge_verification",
+      "numerator": 6,
+      "denominator": 6,
+      "percent": 100,
+      "note": "CORROBORATED=0, INFERRED=0"
+    },
+    {
+      "name": "critical_journey_tracing",
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "note": "Not derived; journeys need a person or an agent (gap journeys-not-derived)."
+    },
+    {
+      "name": "blueprint_view_assessment",
+      "numerator": 19,
+      "denominator": 19,
+      "percent": 100,
+      "note": "Every view has produced, partial, blocked or not_applicable with a reason."
+    },
+    {
+      "name": "diagram_parser_validation",
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "note": "Not run: Blueprint Check bundles no Mermaid parser (structural lint only; see V09)."
+    }
+  ],
+  "denominator_note": "Denominators are bounded by what the input tools discovered in one repository; undiscovered elements may remain. Metrics are never combined into a score."
+}

@@ -1,0 +1,14 @@
+flowchart TB
+    subgraph R1["Repository R1: shop"]
+        subgraph G1["Deployable boundary: Compose services"]
+            n_C01["C01 api (Node.js) at api"]
+            n_C03["C03 web (Node.js) at web"]
+        end
+        subgraph G2["Deployable boundary: Packages and source directories"]
+            n_C02["C02 @shop/shared at shared"]
+        end
+    end
+    n_C01 -->|"imports"| n_C02
+    n_C03 -->|"imports"| n_C02
+    n_C03 -->|"depends_on, imports"| n_C01
+    LEGEND["Legend: arrow = derived relationship | label prefix INFERRED = heuristic | cylinder = data store | hexagon = contract"]

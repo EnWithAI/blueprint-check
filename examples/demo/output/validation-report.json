@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "kind": "blueprint-validation-report",
+  "gates": [
+    {
+      "id": "V01",
+      "check": "Scope integrity",
+      "status": "pass",
+      "method": "Repository root and .git snapshot read directly",
+      "evidence": "R1 at unknown commit; dirty state not determined"
+    },
+    {
+      "id": "V02",
+      "check": "Inventory completeness",
+      "status": "pass",
+      "method": "Every container, store and API description is a coverage unit with an explicit status",
+      "evidence": "Enumeration is never counted as inspection"
+    },
+    {
+      "id": "V03",
+      "check": "Source traceability",
+      "status": "pass",
+      "method": "Every evidence record is a location reported by an input tool; cited lines are hashed",
+      "evidence": "17 records, 0 with a line that could not be hashed"
+    },
+    {
+      "id": "V04",
+      "check": "Critical journeys",
+      "status": "not_run",
+      "method": "Journeys are not derived",
+      "evidence": "Gap journeys-not-derived"
+    },
+    {
+      "id": "V05",
+      "check": "Cross-repository contracts",
+      "status": "not_run",
+      "method": "Single repository per run",
+      "evidence": "Generate one blueprint per repository; cross-repository bindings need a person or an agent"
+    },
+    {
+      "id": "V06",
+      "check": "As-built accuracy",
+      "status": "pass",
+      "method": "Heuristic edges are INFERRED; SDK imports are CORROBORATED, not proven calls; deployment descriptors are not called production",
+      "evidence": "0 INFERRED relationships labelled in views"
+    },
+    {
+      "id": "V07",
+      "check": "Cross-view consistency",
+      "status": "pass",
+      "method": "Views are generated from the model; node ids carry model ids",
+      "evidence": "All references resolve"
+    },
+    {
+      "id": "V08",
+      "check": "Catalog coverage",
+      "status": "pass",
+      "method": "All 19 catalog views assigned a status",
+      "evidence": "D00=produced, D01=produced, D02=produced, D03=blocked, D04=partial, D05=produced, D06=blocked, D07=produced, D08=blocked, D09=produced, D10=produced, D11=produced, D12=blocked, D13=blocked, D14=blocked, D15=blocked, D16=blocked, D17=not_applicable, D18=blocked"
+    },
+    {
+      "id": "V09",
+      "check": "Mermaid validation",
+      "status": "not_run",
+      "method": "No Mermaid parser bundled; structural lint only",
+      "evidence": "Structural lint clean for 10 diagrams"
+    },
+    {
+      "id": "V10",
+      "check": "Rendered readability",
+      "status": "not_run",
+      "method": "No renderer bundled",
+      "evidence": "Node budget 22 per view; omitted elements are counted"
+    },
+    {
+      "id": "V11",
+      "check": "Machine-readable integrity",
+      "status": "pass",
+      "method": "Unique ids and reference resolution; JSON validated against schema/blueprint-check.schema.json in tests",
+      "evidence": "No problems"
+    },
+    {
+      "id": "V12",
+      "check": "Coverage honesty",
+      "status": "pass",
+      "method": "Metrics computed from the ledger; zero denominators are null, never 100%",
+      "evidence": "See coverage-ledger.json"
+    },
+    {
+      "id": "V13",
+      "check": "Sensitive data and source preservation",
+      "status": "pass",
+      "method": "Every output string is token-redacted; environment values never kept; nothing written outside the output directory",
+      "evidence": "Redaction applied to all documents and labels"
+    }
+  ]
+}

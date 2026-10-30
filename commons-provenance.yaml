@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: MIT
+# Machine-readable Commons provenance. Standard: EnWithAI Engineering Commons attribution standard v1.0.
+schema_version: "0.1"
+commons:
+  program: engineering-commons
+  publisher: "EnWithAI Technologies"
+  project: blueprint-check
+  former_names: []
+license:
+  spdx: MIT
+  file: LICENSE
+  copyright_holder: "EnWithAI Technologies"
+  copyright_holder_confirmed: true # same basis as the other Commons tools (D-087)
+maintainers:
+  - { name: Koushik Ramani, github: aiwithrk, role: maintainer and security contact }
+contact: hello@enwithai.com
+attribution:
+  file: ATTRIBUTION.md
+  notice: NOTICE.md
+  trademarks: TRADEMARKS.md
+  references: REFERENCES.md
+development:
+  vendored_third_party_code: false
+  ai_assisted: true
+  synthetic_fixtures_only: true
+ecosystem:
+  related_product: CrewPE
+  dependency: none
+  integration: none
+frameworks:
+  clear:
+    owner: NetworkGain Consulting
+    relationship: inspired
+    spec_version: "Software Architecture Blueprint Master Prompt 2.0.0"
+    evidence: "View catalog D00-D18, confidence labels, coverage metrics and gates V01-V13 follow the master prompt; code is original."
+  trace:
+    owner: EnWithAI Technologies
+    relationship: not-assessed
+    spec_version: null
+    evidence: "TRACE specification not available."
+upstream:
+  - { name: "@enwithai/architecture-check", version: "0.2.1", license: MIT, use: runtime dependency }
+  - { name: yaml, version: "2.9.1", license: ISC, use: transitive runtime dependency }
+references: REFERENCES.md
+review_items: [HR-5, HR-11]

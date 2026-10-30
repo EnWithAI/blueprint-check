@@ -1,0 +1,11 @@
+flowchart TB
+    subgraph n_C01["Container: C01 api (Node.js)"]
+        n_C04["C04 orders"]
+        n_C05["C05 payments"]
+    end
+    n_C02["C02 @shop/shared"]
+    n_X01[/"X01 Stripe"/]
+    n_C04 -->|"imports"| n_C05
+    n_C04 -->|"imports"| n_C02
+    n_C05 -->|"imports"| n_X01
+    LEGEND["Legend: arrow = derived relationship | label prefix INFERRED = heuristic | cylinder = data store | hexagon = contract"]

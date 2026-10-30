@@ -1,0 +1,550 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/enwithai/blueprint-check/schema/blueprint-check.schema.json",
+  "title": "Blueprint Check documents (schema 1.0)",
+  "description": "architecture-model.json, evidence-register.json, coverage-ledger.json, validation-report.json and the drift report of `blueprint-check check`.",
+  "oneOf": [
+    { "$ref": "#/$defs/model" },
+    { "$ref": "#/$defs/register" },
+    { "$ref": "#/$defs/ledger" },
+    { "$ref": "#/$defs/validation" },
+    { "$ref": "#/$defs/drift" }
+  ],
+  "$defs": {
+    "ids": { "type": "array", "items": { "type": "string" } },
+    "confidence": { "enum": ["CONFIRMED", "CORROBORATED", "INFERRED", "UNKNOWN", "CONFLICTED"] },
+    "viewStatus": { "enum": ["produced", "partial", "not_applicable", "blocked"] },
+    "nullableString": { "type": ["string", "null"] },
+    "input": {
+      "type": ["object", "null"],
+      "required": ["kind", "path", "sha256"],
+      "properties": {
+        "kind": { "enum": ["impact-check-graph", "product-check-results", "product-check-as-built-spec"] },
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": { "name": { "const": "blueprint-check" }, "version": { "type": "string" } },
+      "additionalProperties": false
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "id",
+        "key",
+        "name",
+        "kind",
+        "responsibility",
+        "repo_ids",
+        "implementation_paths",
+        "technology",
+        "origins",
+        "descriptors",
+        "parent_id",
+        "implementation_status",
+        "confidence",
+        "evidence_ids"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^(C|X|U)[0-9]+$" },
+        "key": { "type": "string" },
+        "name": { "type": "string" },
+        "kind": { "enum": ["actor", "container", "component", "external_system"] },
+        "responsibility": { "type": "string" },
+        "repo_ids": { "$ref": "#/$defs/ids" },
+        "implementation_paths": { "$ref": "#/$defs/ids" },
+        "technology": { "$ref": "#/$defs/nullableString" },
+        "origins": { "$ref": "#/$defs/ids" },
+        "descriptors": { "$ref": "#/$defs/ids" },
+        "parent_id": { "$ref": "#/$defs/nullableString" },
+        "implementation_status": { "enum": ["wired", "unknown"] },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/ids" }
+      },
+      "additionalProperties": false
+    },
+    "relationship": {
+      "type": "object",
+      "required": [
+        "id",
+        "key",
+        "source_id",
+        "target_id",
+        "relationship_type",
+        "purpose",
+        "sync_or_async",
+        "contract_ids",
+        "confidence",
+        "evidence_ids",
+        "unresolved_questions"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^REL[0-9]+$" },
+        "key": { "type": "string" },
+        "source_id": { "type": "string" },
+        "target_id": { "type": "string" },
+        "relationship_type": { "type": "string" },
+        "purpose": { "type": "string" },
+        "sync_or_async": { "enum": ["sync", "async", "unknown"] },
+        "contract_ids": { "$ref": "#/$defs/ids" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/ids" },
+        "unresolved_questions": { "$ref": "#/$defs/ids" }
+      },
+      "additionalProperties": false
+    },
+    "store": {
+      "type": "object",
+      "required": [
+        "id",
+        "key",
+        "name",
+        "technology_if_proven",
+        "writers",
+        "readers",
+        "schema_paths",
+        "confidence",
+        "evidence_ids"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^DS[0-9]+$" },
+        "key": { "type": "string" },
+        "name": { "type": "string" },
+        "technology_if_proven": { "$ref": "#/$defs/nullableString" },
+        "writers": { "$ref": "#/$defs/ids" },
+        "readers": { "$ref": "#/$defs/ids" },
+        "schema_paths": { "$ref": "#/$defs/ids" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/ids" }
+      },
+      "additionalProperties": false
+    },
+    "contract": {
+      "type": "object",
+      "required": [
+        "id",
+        "key",
+        "kind",
+        "version_if_proven",
+        "producer_ids",
+        "definition_paths",
+        "items",
+        "confidence",
+        "evidence_ids"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CT[0-9]+$" },
+        "key": { "type": "string" },
+        "kind": { "enum": ["openapi", "asyncapi", "http-endpoints", "pages"] },
+        "version_if_proven": { "$ref": "#/$defs/nullableString" },
+        "producer_ids": { "$ref": "#/$defs/ids" },
+        "definition_paths": { "$ref": "#/$defs/ids" },
+        "items": { "type": "integer", "minimum": 0 },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/ids" }
+      },
+      "additionalProperties": false
+    },
+    "model": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "kind",
+        "tool",
+        "generated_at",
+        "system_name",
+        "overall_status",
+        "inputs",
+        "repositories",
+        "components",
+        "relationships",
+        "data_stores",
+        "contracts",
+        "journeys",
+        "diagrams",
+        "findings",
+        "gaps",
+        "catalog"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "kind": { "const": "blueprint-architecture-model" },
+        "tool": { "$ref": "#/$defs/tool" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "system_name": { "type": "string" },
+        "overall_status": { "enum": ["PROVISIONAL", "BLOCKED"] },
+        "inputs": {
+          "type": "object",
+          "required": ["architecture_check", "graph", "product_check"],
+          "properties": {
+            "architecture_check": {
+              "type": "object",
+              "required": ["version", "config"],
+              "properties": { "version": { "type": "string" }, "config": { "type": "string" } },
+              "additionalProperties": false
+            },
+            "graph": { "$ref": "#/$defs/input" },
+            "product_check": { "$ref": "#/$defs/input" }
+          },
+          "additionalProperties": false
+        },
+        "repositories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "actual_ref",
+              "branch",
+              "dirty_state",
+              "access_status",
+              "scope_paths",
+              "limitations"
+            ],
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "actual_ref": { "$ref": "#/$defs/nullableString" },
+              "branch": { "$ref": "#/$defs/nullableString" },
+              "dirty_state": { "const": "not_determined" },
+              "access_status": { "const": "accessible" },
+              "scope_paths": { "$ref": "#/$defs/ids" },
+              "limitations": { "$ref": "#/$defs/ids" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "components": { "type": "array", "items": { "$ref": "#/$defs/component" } },
+        "relationships": { "type": "array", "items": { "$ref": "#/$defs/relationship" } },
+        "data_stores": { "type": "array", "items": { "$ref": "#/$defs/store" } },
+        "contracts": { "type": "array", "items": { "$ref": "#/$defs/contract" } },
+        "journeys": { "type": "array", "maxItems": 0 },
+        "diagrams": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "catalog_id",
+              "title",
+              "status",
+              "component_ids",
+              "relationship_ids",
+              "artifact_path",
+              "omitted_nodes"
+            ],
+            "properties": {
+              "id": { "type": "string", "pattern": "^D[0-9]{2}(-[A-Z0-9]+)?$" },
+              "catalog_id": { "type": "string", "pattern": "^D[0-9]{2}$" },
+              "title": { "type": "string" },
+              "status": { "$ref": "#/$defs/viewStatus" },
+              "component_ids": { "$ref": "#/$defs/ids" },
+              "relationship_ids": { "$ref": "#/$defs/ids" },
+              "artifact_path": { "type": "string" },
+              "omitted_nodes": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "rule_id",
+              "observation",
+              "impact",
+              "affected_ids",
+              "evidence_ids",
+              "confidence",
+              "optional_recommendation"
+            ],
+            "properties": {
+              "id": { "type": "string", "pattern": "^F[0-9]+$" },
+              "rule_id": {
+                "enum": ["isolated-container", "interface-unowned", "endpoints-without-auth-reference"]
+              },
+              "observation": { "type": "string" },
+              "impact": { "type": "string" },
+              "affected_ids": { "$ref": "#/$defs/ids" },
+              "evidence_ids": { "$ref": "#/$defs/ids" },
+              "confidence": { "$ref": "#/$defs/confidence" },
+              "optional_recommendation": { "$ref": "#/$defs/nullableString" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "code",
+              "description",
+              "affected_ids",
+              "criticality",
+              "confirmation_needed",
+              "paths"
+            ],
+            "properties": {
+              "id": { "type": "string", "pattern": "^G[0-9]+$" },
+              "code": { "type": "string" },
+              "description": { "type": "string" },
+              "affected_ids": { "$ref": "#/$defs/ids" },
+              "criticality": { "enum": ["high", "medium", "low"] },
+              "confirmation_needed": { "type": "string" },
+              "paths": { "$ref": "#/$defs/ids" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "catalog": {
+          "type": "array",
+          "minItems": 19,
+          "maxItems": 19,
+          "items": {
+            "type": "object",
+            "required": ["catalog_id", "name", "status", "diagram_ids", "reason"],
+            "properties": {
+              "catalog_id": { "type": "string", "pattern": "^D[0-9]{2}$" },
+              "name": { "type": "string" },
+              "status": { "$ref": "#/$defs/viewStatus" },
+              "diagram_ids": { "$ref": "#/$defs/ids" },
+              "reason": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "register": {
+      "type": "object",
+      "required": ["schema_version", "kind", "citation_format", "evidence"],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "kind": { "const": "blueprint-evidence-register" },
+        "citation_format": { "type": "string" },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "evidence_id",
+              "repo_id",
+              "snapshot_ref",
+              "relative_path",
+              "line_start",
+              "line_end",
+              "symbol_or_config_key",
+              "evidence_type",
+              "concise_observation",
+              "source_tool",
+              "excerpt_sha256",
+              "supports_claim_ids",
+              "limitations"
+            ],
+            "properties": {
+              "evidence_id": { "type": "string", "pattern": "^E[0-9]{3,}$" },
+              "repo_id": { "type": "string" },
+              "snapshot_ref": { "$ref": "#/$defs/nullableString" },
+              "relative_path": { "type": "string" },
+              "line_start": { "type": ["integer", "null"], "minimum": 1 },
+              "line_end": { "type": ["integer", "null"], "minimum": 1 },
+              "symbol_or_config_key": { "type": "string" },
+              "evidence_type": {
+                "enum": [
+                  "implementation",
+                  "registration_or_configuration",
+                  "schema_or_migration",
+                  "test_definition",
+                  "documentation_intent",
+                  "runtime_observation"
+                ]
+              },
+              "concise_observation": { "type": "string" },
+              "source_tool": {
+                "enum": ["architecture-check", "impact-check-graph", "product-check", "blueprint-check"]
+              },
+              "excerpt_sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+              "supports_claim_ids": { "$ref": "#/$defs/ids" },
+              "limitations": { "$ref": "#/$defs/nullableString" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metric": {
+      "type": "object",
+      "required": ["name", "numerator", "denominator", "percent", "note"],
+      "properties": {
+        "name": { "type": "string" },
+        "numerator": { "type": "integer", "minimum": 0 },
+        "denominator": { "type": "integer", "minimum": 0 },
+        "percent": { "type": ["number", "null"] },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ledger": {
+      "type": "object",
+      "required": ["schema_version", "kind", "units", "metrics", "denominator_note"],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "kind": { "const": "blueprint-coverage-ledger" },
+        "units": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "scope_item_id",
+              "repo_id",
+              "category",
+              "path_or_unit_id",
+              "inspection_status",
+              "inspection_depth",
+              "evidence_ids",
+              "related_diagram_ids",
+              "exclusion_or_gap_reason"
+            ],
+            "properties": {
+              "scope_item_id": { "type": "string" },
+              "repo_id": { "type": "string" },
+              "category": { "type": "string" },
+              "path_or_unit_id": { "type": "string" },
+              "inspection_status": {
+                "enum": ["enumerated_only", "inspected", "partially_inspected", "excluded", "inaccessible"]
+              },
+              "inspection_depth": { "type": "string" },
+              "evidence_ids": { "$ref": "#/$defs/ids" },
+              "related_diagram_ids": { "$ref": "#/$defs/ids" },
+              "exclusion_or_gap_reason": { "$ref": "#/$defs/nullableString" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "metrics": { "type": "array", "items": { "$ref": "#/$defs/metric" } },
+        "denominator_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": ["schema_version", "kind", "gates"],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "kind": { "const": "blueprint-validation-report" },
+        "gates": {
+          "type": "array",
+          "minItems": 13,
+          "items": {
+            "type": "object",
+            "required": ["id", "check", "status", "method", "evidence"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^V[0-9]{2}$" },
+              "check": { "type": "string" },
+              "status": { "enum": ["pass", "fail", "partial", "not_run"] },
+              "method": { "type": "string" },
+              "evidence": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "drift": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "kind",
+        "tool",
+        "generated_at",
+        "blueprint",
+        "evidence",
+        "model",
+        "result",
+        "policy"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "kind": { "const": "blueprint-check-drift" },
+        "tool": { "$ref": "#/$defs/tool" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "blueprint": {
+          "type": "object",
+          "required": ["path", "generated_at", "tool_version"],
+          "properties": {
+            "path": { "type": "string" },
+            "generated_at": { "type": "string" },
+            "tool_version": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "object",
+          "required": ["total", "unchanged", "changed", "missing", "items"],
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "unchanged": { "type": "integer", "minimum": 0 },
+            "changed": { "type": "integer", "minimum": 0 },
+            "missing": { "type": "integer", "minimum": 0 },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["evidence_id", "path", "line_start", "line_end", "state"],
+                "properties": {
+                  "evidence_id": { "type": "string" },
+                  "path": { "type": "string" },
+                  "line_start": { "type": ["integer", "null"] },
+                  "line_end": { "type": ["integer", "null"] },
+                  "state": { "enum": ["changed", "missing"] }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "model": {
+          "type": "object",
+          "required": [
+            "added_components",
+            "removed_components",
+            "added_relationships",
+            "removed_relationships"
+          ],
+          "properties": {
+            "added_components": { "$ref": "#/$defs/ids" },
+            "removed_components": { "$ref": "#/$defs/ids" },
+            "added_relationships": { "$ref": "#/$defs/ids" },
+            "removed_relationships": { "$ref": "#/$defs/ids" }
+          },
+          "additionalProperties": false
+        },
+        "result": { "enum": ["current", "stale"] },
+        "policy": {
+          "type": "object",
+          "required": ["evaluated", "result"],
+          "properties": {
+            "evaluated": { "type": "boolean" },
+            "result": { "enum": ["pass", "fail", "not_evaluated"] }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

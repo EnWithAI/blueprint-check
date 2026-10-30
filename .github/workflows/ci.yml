@@ -1,0 +1,82 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2026 EnWithAI Technologies
+# CI for Blueprint Check: typecheck, lint, format, build, tests with coverage, license audit and package dry-run
+# on Node 22/24/26, plus a self-test of this repository's Action on its own demo. Read-only token; actions pinned by
+# commit SHA.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ["22", "24", "26"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check:all
+      - run: node scripts/license-audit.mjs --all
+      - run: npm pack --dry-run
+
+  # Runs this repository's own action on the demo: generate, then check (the blueprint is current).
+  action-self-test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+      - run: npm ci --ignore-scripts && npm run build && rm -rf node_modules
+      - id: generate
+        uses: ./
+        with:
+          working-directory: examples/demo
+          graph: graph.json
+          output-dir: examples/demo/architecture-blueprint
+      - id: check
+        uses: ./
+        with:
+          mode: check
+          working-directory: examples/demo
+          output-dir: drift
+          fail-on-stale: "true"
+      - name: Check the installed dependencies and the outputs
+        env:
+          STATUS: ${{ steps.generate.outputs.overall-status }}
+          RESULT: ${{ steps.check.outputs.result }}
+        run: |
+          test -f node_modules/@enwithai/architecture-check/package.json
+          test ! -e node_modules/typescript
+          test "$STATUS" = PROVISIONAL
+          test "$RESULT" = current
+          test -s examples/demo/architecture-blueprint/ARCHITECTURE_BLUEPRINT.md
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: blueprint
+          path: examples/demo/architecture-blueprint/
+          retention-days: 7
