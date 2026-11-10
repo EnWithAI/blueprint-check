@@ -1,6 +1,6 @@
 # shop: as-built architecture blueprint
 
-**Overall status:** PROVISIONAL · **Snapshot:** unknown · **Generated:** 2026-01-01 by Blueprint Check 0.1.0 · **Basis:** static, deterministic derivation
+**Overall status:** PROVISIONAL · **Snapshot:** unknown · **Generated:** 2026-01-01 by Blueprint Check 0.3.261110 · **Basis:** static, deterministic derivation
 
 This blueprint is generated from evidence that Architecture Check, the Impact Check module graph found in the repository. Views that need judgment (journeys, trust enforcement, operations) are marked blocked, not invented. IDs resolve in `architecture-model.json`; evidence ids in `evidence-register.json`.
 
@@ -8,7 +8,7 @@ This blueprint is generated from evidence that Architecture Check, the Impact Ch
 
 | Input | Used | Detail |
 |---|---|---|
-| Architecture Check derive | yes | `0.2.1, config defaults` |
+| Architecture Check derive | yes | `0.3.261110, config defaults` |
 | Impact Check module graph | yes | `/Users/rkoushik/Documents/GitHub Repos/crewpe-engineering-commons/blueprint-check/examples/demo/graph.json` |
 | Product Check surface | no | endpoints, pages, entities not derived |
 

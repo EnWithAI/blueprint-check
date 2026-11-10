@@ -23,7 +23,7 @@ demo data are synthetic.
 | Upstream                                                             | Version          | License   | How Blueprint Check uses it                                                             |
 | -------------------------------------------------------------------- | ---------------- | --------- | --------------------------------------------------------------------------------------- |
 | [Node.js](https://nodejs.org)                                        | 22 / 24 / ≥ 26   | MIT       | Runtime only                                                                            |
-| [Architecture Check](https://github.com/enwithai/architecture-check) | 0.2.1            | MIT       | Runtime dependency: in-process `derive` (as-built model) and its Structurizr DSL writer |
+| [Architecture Check](https://github.com/enwithai/architecture-check) | 0.3.261110       | MIT       | Runtime dependency: in-process `derive` (as-built model) and its Structurizr DSL writer |
 | [yaml](https://github.com/eemeli/yaml)                               | 2.9.1            | ISC       | Transitive runtime dependency of Architecture Check                                     |
 | [Impact Check](https://github.com/enwithai/impact-check)             | graph schema 1.0 | MIT       | `impact-check graph` output, read as a file through Architecture Check                  |
 | [Product Check](https://github.com/enwithai/product-check)           | schema 0.1.0     | MIT       | Results or as-built spec, read as a file                                                |

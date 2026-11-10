@@ -3,14 +3,14 @@
   "kind": "blueprint-architecture-model",
   "tool": {
     "name": "blueprint-check",
-    "version": "0.1.0"
+    "version": "0.3.261110"
   },
   "generated_at": "2026-01-01T00:00:00.000Z",
   "system_name": "shop",
   "overall_status": "PROVISIONAL",
   "inputs": {
     "architecture_check": {
-      "version": "0.2.1",
+      "version": "0.3.261110",
       "config": "defaults"
     },
     "graph": {

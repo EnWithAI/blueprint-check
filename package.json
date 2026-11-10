@@ -1,6 +1,6 @@
 {
   "name": "@enwithai/blueprint-check",
-  "version": "0.1.0",
+  "version": "0.3.261110",
   "description": "Deterministic, offline as-built architecture blueprints: generates an evidence-linked model, Mermaid views, coverage ledger and a Structurizr model for Architecture Check, then checks that the blueprint still matches the code.",
   "license": "MIT",
   "author": "EnWithAI Technologies",
@@ -59,7 +59,7 @@
     "check:all": "npm run typecheck && npm run lint && npm run format:check && npm run build && npm run test:coverage"
   },
   "dependencies": {
-    "@enwithai/architecture-check": "0.2.1"
+    "@enwithai/architecture-check": "0.3.261110"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
