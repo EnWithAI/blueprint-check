@@ -42,7 +42,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: EnWithAI/blueprint-check@v0.1.0
+      - uses: EnWithAI/blueprint-check@v0.3.261110
         with:
           mode: check
           fail-on-stale: "true"

@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: EnWithAI/blueprint-check@v0.1.0 # pin a release tag or SHA
+      - uses: EnWithAI/blueprint-check@v0.3.261110 # pin a release tag or SHA
         with:
           mode: check # or generate
           fail-on-stale: "false" # report only

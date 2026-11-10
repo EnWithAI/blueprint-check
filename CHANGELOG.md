@@ -4,6 +4,13 @@ All notable changes are listed here. Versions follow semantic versioning; `0.x` 
 
 ## Unreleased
 
+## 0.3.261110 — 2026-11-10
+
+- Version alignment: every EnWithAI Engineering Commons tool now uses `0.3.YYMMDD`, the date of the release
+  (`0.3.261110` = 2026-11-10). It continues from `0.1.0`. No functional change; report and schema versions are
+  unchanged.
+- Pins Architecture Check 0.3.261110 (same code as 0.2.1).
+
 ## 0.1.0 — 2026-11-10
 
 First version.

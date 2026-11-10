@@ -1,6 +1,6 @@
 # Architecture blueprint: shop
 
-**Overall status: PROVISIONAL.** Generated 2026-01-01 by Blueprint Check 0.1.0. Views: 8 produced, 1 partial, 9 blocked (need judgment), 1 not applicable.
+**Overall status: PROVISIONAL.** Generated 2026-01-01 by Blueprint Check 0.3.261110. Views: 8 produced, 1 partial, 9 blocked (need judgment), 1 not applicable.
 
 | File | Contents |
 |---|---|

@@ -1,3 +1,12 @@
+# Release readiness — 0.3.261110 (version alignment)
+
+Date: 2026-11-10 · Branch `release/0.3.261110` · **Verdict: RELEASE APPROVED** by the user on 2026-11-10. Every
+Engineering Commons tool moves to `0.3.YYMMDD`; no functional change. Pins Architecture Check 0.3.261110 from the
+registry (same code as 0.2.1); `npm audit --omit=dev` 0. `npm run check:all` exit 0 (37 tests); demo output
+regenerated.
+
+---
+
 # Release readiness — Blueprint Check 0.1.0
 
 Date: 2026-11-10 · Branch `main` on GitHub (EnWithAI/blueprint-check, CI green) · **Verdict: RELEASE APPROVED** by the

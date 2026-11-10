@@ -9,7 +9,7 @@ license.
 ## Third-party material
 
 Blueprint Check contains no vendored source code. It has **one direct runtime dependency**,
-[`@enwithai/architecture-check`](https://github.com/enwithai/architecture-check) 0.2.1 (MIT, Copyright EnWithAI
+[`@enwithai/architecture-check`](https://github.com/enwithai/architecture-check) 0.3.261110 (MIT, Copyright EnWithAI
 Technologies), which depends on [`yaml`](https://github.com/eemeli/yaml) 2.9.1 (ISC, Copyright Eemeli Aro). Both are
 installed by npm, not copied.
 
