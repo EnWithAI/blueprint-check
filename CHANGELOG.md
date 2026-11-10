@@ -4,7 +4,7 @@ All notable changes are listed here. Versions follow semantic versioning; `0.x` 
 
 ## Unreleased
 
-## 0.1.0 (unreleased, 2026-10-30)
+## 0.1.0 — 2026-11-10
 
 First version.
 
